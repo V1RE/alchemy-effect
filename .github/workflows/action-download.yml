@@ -1,0 +1,17 @@
+name: action-download
+on: push
+jobs:
+  # alchemy-run/alchemy v2.0.0-beta.87: tracks the dangling .vscode/tsrs-tsdk/tsgo symlink
+  before:
+    runs-on: ubuntu-latest
+    steps:
+      - id: alchemy
+        uses: alchemy-run/alchemy@33c10dd55f5559beee2ec96b155c3a6429e44a93
+      - run: echo "action=${{ steps.alchemy.outputs.action }}"
+  # the fix branch: symlink removed
+  after:
+    runs-on: ubuntu-latest
+    steps:
+      - id: alchemy
+        uses: V1RE/alchemy-effect@fix/vscode-tsrs-tsdk-symlink
+      - run: echo "action=${{ steps.alchemy.outputs.action }}"
